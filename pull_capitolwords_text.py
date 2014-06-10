@@ -3,6 +3,7 @@ import json
 import os.path
 import datetime
 import time
+from multiprocessing import Pool
 
 # Capitol Words API root for text
 api_root = '/api/1/text.json?'
@@ -13,7 +14,7 @@ def log_error(page):
   with open("data/words/errors.txt", "a") as error_log:
     error_log.write('page_' + str(page).zfill(6) +',')
 
-for page in range(30000, 0, -1):
+def pull_page(page):
   # check to see if we already have it
   file_path = 'data/words/page_' + str(page).zfill(6) + '.txt'
   if not os.path.isfile(file_path):
@@ -33,5 +34,5 @@ for page in range(30000, 0, -1):
       log_error(page)
 
 
-  #else:
-    #print 'skipping ' + str(page)
+workers = Pool(15)
+workers.map(pull_page, range(35000))
