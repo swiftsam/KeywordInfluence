@@ -4,10 +4,10 @@ import json
 import pandas as pd
 import numpy as np
 
-file_path = "data/words/by_bioguide/"
+file_path = "data/words_by_bioguide/"
 files     = sorted(list(listdir(file_path)))
 if "errors.txt" in files:
-	files.remove("errors.txt")
+	files.remove("words_errors.txt")
 
 print "loading data from " + str(len(files)) + " files"
 

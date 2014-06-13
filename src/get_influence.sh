@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd ../data/influence
+cd ../data
 
 ### contributions
 wget http://datacommons.s3.amazonaws.com/subsets/td-20120907/contributions.fec.csv.zip
