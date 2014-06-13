@@ -9,11 +9,13 @@ all: .make_db_import_words .make_db_import_influence
 # Import words files to database
 .make_db_import_words: .make_get_words  src/db_import_words.sql
 	cat src/db_import_words.sql | ${PSQL_KEYINFL}
+	cat src/db_import_words.sql | psql --set ON_ERROR_STOP=1 keyword-influence
 	touch $@
 
 # Import influence files to database
 .make_db_import_influence: .make_get_influence src/db_import_influence.sql
 	cat src/db_import_influence.sql | {$PSQL_KEYINFL}
+	cat src/db_import_influence.sql | psql --set ON_ERROR_STOP=1 keyword-influence
 	touch $@
 
 # Download influence files from AWS
