@@ -53,5 +53,6 @@ coverage.xml
 docs/_build/
 
 data
+.make_*
 .ipynb_checkpoints
 api_keys.py
