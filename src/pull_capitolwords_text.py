@@ -14,7 +14,7 @@ api_text = 'http://capitolwords.org/api/1/text.json?'
 def pull_bioguide_text(bioguide_id):
   http = url.PoolManager(timeout = 1)
   # check to see if we already have it
-  file_path = 'data/words/by_bioguide/bgid_' + str(bioguide_id) + '.txt'
+  file_path = '../data/words/by_bioguide/bgid_' + str(bioguide_id) + '.txt'
   if not os.path.isfile(file_path):
     # query parameters
     query_params = {'apikey': key.sunlight,
@@ -51,7 +51,7 @@ def pull_bioguide_text(bioguide_id):
 
 def log_error(bioguide_id):
   print str(datetime.datetime.now().time()) + ' time out on ' + str(bioguide_id)
-  with open("data/words/errors.txt", "a") as error_log:
+  with open("../data/words/errors.txt", "a") as error_log:
     error_log.write('bgid_' + str(bioguide_id) +',')
 
 
