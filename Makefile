@@ -16,9 +16,9 @@ all: .make_db_import_words .make_db_import_contributions .make_db_import_influen
 	cat src/db_import_contributions.sql | {$PSQL_KEYINFL}
 	touch $@
 
-# Import contributions file to database
+# Import influences files to database
 .make_db_import_influences: .make_get_influences src/db_import_influences.sql
-	cat src/db_import_influences.sql | {$PSQL_KEYINFL}
+	cat src/db_import_influences.sql | psql --set ON_ERROR_STOP=1 keyword-influence
 	touch $@
 
 # Download influence files from AWS
@@ -40,3 +40,6 @@ clean:
 drop_keyinfl_db:
 	dropdb --if-exists keyword-influence
 	rm -f .make_db_import
+
+fake_touch_all:
+	touch 
