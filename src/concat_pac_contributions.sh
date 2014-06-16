@@ -11,12 +11,18 @@
 ## http://www.opensecrets.org/myos/download.php?f=CampaignFin00.zip
 ## from each of those files, extract the pacs[YY].txt file and zip into pacs.zip
 
-import zipfile
+cd ../data
 
-with zipfile.ZipFile('data/pacs.zip', "r") as z:
-    z.extractall()
+# unzip
+unzip pacs.zip
 
-for pacyear in glob.glob('pacs*.txt'):
-	
+# combine the per-cycle pac files
+cat $(ls pacs*.txt) > pac.csv
+
+# replace the field-enclosing pipes with quotes
+cat pac.csv | tr \| \" > pac.csv 
+
+# remove the per-cycle pac files
+rm pacs*.txt
 
 

@@ -64,3 +64,17 @@ CREATE TABLE bill (
 
 \COPY bill FROM 'data/bill.csv' WITH CSV HEADER DELIMITER AS ',';
 
+DROP TABLE IF EXISTS pac;
+CREATE TABLE pac (
+	year INTEGER,
+	fec_rec_no TEXT,
+	pac_id TEXT,
+	candidate_id TEXT,
+	amount DECIMAL,
+	date TEXT,
+	real_code TEXT,
+	type TEXT,
+	direct TEXT,
+	fec_candidate_id TEXT);
+
+\COPY pac FROM 'data/pac.csv' WITH CSV DELIMITER AS ',';

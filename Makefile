@@ -2,18 +2,16 @@
 # 
 # assumes existence of local postgres db: keyword-influence
 
-PSQL_KEYINFL=psql --set ON_ERROR_STOP=1 keyword-influence
-
 all: .make_db_import_words .make_db_import_contributions .make_db_import_influences
 
 # Import words files to database
 .make_db_import_words: .make_get_words  src/db_import_words.sql
-	cat src/db_import_words.sql | ${PSQL_KEYINFL}
+	cat src/db_import_words.sql | psql --set ON_ERROR_STOP=1 keyword-influence
 	touch $@
 
 # Import contributions file to database
 .make_db_import_contributions: .make_get_influence src/db_import_contributions.sql
-	cat src/db_import_contributions.sql | {$PSQL_KEYINFL}
+	cat src/db_import_contributions.sql | psql --set ON_ERROR_STOP=1 keyword-influence
 	touch $@
 
 # Import influences files to database
