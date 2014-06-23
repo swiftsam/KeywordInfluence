@@ -2,7 +2,7 @@
 # 
 # assumes existence of local postgres db: keyword-influence
 
-all: .make_db_import_words .make_db_import_contributions .make_db_import_influences
+all: .make_db_import_words .make_db_import_contributions .make_db_import_influences .make_db_import_congress
 
 # Import words files to database
 .make_db_import_words: .make_get_words  src/db_import_words.sql
@@ -19,6 +19,11 @@ all: .make_db_import_words .make_db_import_contributions .make_db_import_influen
 	cat src/db_import_influences.sql | psql --set ON_ERROR_STOP=1 keyword-influence
 	touch $@
 
+# Import congress files to database
+.make_db_import_congress: .make_get_congress src/db_import_congress.sql
+	cat src/db_import_congress.sql | psql --set ON_ERROR_STOP=1 keyword-influence
+	touch $@
+
 # Download influence files from AWS
 .make_get_influence: src/get_influence.sh 
 	bash src/get_influence.sh
@@ -27,7 +32,12 @@ all: .make_db_import_words .make_db_import_contributions .make_db_import_influen
 # Pull, save, and combine words files from Sunlight Foundation
 .make_get_words: src/pull_congresspeople.py src/pull_capitolwords_text.py src/concat_capitolwords_text.py
 	python src/pull_capitolwords_text.py
-	pythong src/concat_capitolwords_text.py
+	python src/concat_capitolwords_text.py
+	touch $@
+
+# Download current congress file from sunlight foundation
+.make_get_congress: src/pull_congress.sh
+	bash src/pull_congress.sh
 	touch $@
 
 ### Cleanup...
