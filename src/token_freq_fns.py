@@ -1,13 +1,13 @@
-import pandas as pd
-import numpy as np
-import psycopg2 as psql
+import pandas        as pd
+import numpy         as np
+import psycopg2      as psql
 import nltk.tokenize as tok
-import nltk.corpus as corpus
-import nltk.stem as stem
-from sklearn.feature_extraction.text import CountVectorizer
-import scipy.io as io
+import nltk.corpus   as corpus
+import nltk.stem     as stem
+import scipy.io      as io
 import csv
-from os.path import isfile
+from   sklearn.feature_extraction.text import CountVectorizer
+from   os.path import isfile
 
 # Get the vocabulary and token count per congress corpus
 def token_count_congress(congress,            \
