@@ -64,8 +64,8 @@ CREATE TABLE bill (
 
 \COPY bill FROM 'data/bill.csv' WITH CSV HEADER DELIMITER AS ',';
 
-DROP TABLE IF EXISTS pac;
-CREATE TABLE pac (
+DROP TABLE IF EXISTS pac_contrib;
+CREATE TABLE pac_contrib (
 	year INTEGER,
 	fec_rec_no TEXT,
 	pac_id TEXT,
@@ -77,4 +77,22 @@ CREATE TABLE pac (
 	direct TEXT,
 	fec_candidate_id TEXT);
 
+\COPY pac_contrib FROM 'data/pac_contrib.csv' WITH CSV DELIMITER AS ',';
+
+DROP TABLE IF EXISTS pac;
+CREATE TABLE pac(
+	cycle TEXT,
+	cmte_id TEXT,
+	pac_short TEXT,
+	affiliate TEXT,
+	ultorg TEXT,
+	recip_id TEXT,
+	recip_code TEXT,
+	fec_cand_id TEXT,
+	party TEXT,
+	prim_code TEXT,
+	source TEXT,
+	sensitive TEXT,
+	foreign_own INTEGER,
+	active INTEGER);
 \COPY pac FROM 'data/pac.csv' WITH CSV DELIMITER AS ',';

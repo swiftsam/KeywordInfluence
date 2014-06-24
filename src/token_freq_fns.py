@@ -79,6 +79,22 @@ def print_top_tokens(count_matrix, vocab, n=5):
     for i in top_indexes:
         print "%.4f" % str(rel_freqs[i]) + " | " + str(count_matrix[:,i].sum()) + " | " + vocab.get(str(i))
 
+def get_chunk_ids_by_pac(pac_id):
+    
+    conn    = psql.connect("dbname='keyword-influence'")
+    cursor  = conn.cursor()
+    
+    cursor.execute("SELECT id FROM words        \
+                        WHERE bioguide_id IN(   \
+                            SELECT bioguide_id  \
+                            FROM pac_contrib    \
+                            INNER JOIN congress \
+                            ON pac_contrib.fec_candidate_id = \
+                                congress.fec_id \
+                            WHERE pac_id = '" + pac_id + "');")
+    sql_result = cursor.fetchall()
+    return(sql_result)
+
 # Calculate frequency discrepancy
 
 # Rank most highly discrepant tokens
