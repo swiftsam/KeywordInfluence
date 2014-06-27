@@ -27,3 +27,16 @@ SELECT id FROM words
 			INNER JOIN congress
 			ON pac_contrib.fec_candidate_id = congress.fec_id
 			WHERE pac_id = 'C00089342');
+
+# find PACS which have contributed at least X dollars in sum
+SELECT DISTINCT pac.cmte_id as pac_id, pac.pac_short, sums.sum, sums.n_contribs 
+	FROM pac
+	INNER JOIN (SELECT pac_id, SUM(amount) AS sum, COUNT(1) AS n_contribs
+				FROM pac_contrib
+				GROUP BY pac_id) AS sums
+	ON pac.cmte_id = sums.pac_id
+	WHERE sums.sum > 10000;
+
+SELECT pac_id FROM pac_contrib 
+	WHERE date::date > '2012-01-01'::date 
+	AND date::date < '2012-12-31'::date GROUP BY pac_id;
