@@ -13,12 +13,20 @@
 
 Route::get('/', function()
 {
-	return View::make('pac');
+	return 'Main Page';
 });
 
 Route::get('pac', function()
 {
-    return View::make('pac');
+    $pacs = Pac::paginate(15);
+    return View::make('pacs')->with('pacs', $pacs);
+});
+
+Route::get('pac/{id}', function($id)
+{
+	//$pac = Pac::
+	//return View::make('pac')->with()
+    return 'PAC '.$id;
 });
 
 Route::get('foundation', function()
