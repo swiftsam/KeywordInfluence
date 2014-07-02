@@ -114,7 +114,7 @@ def get_chunk_ids_by_pac(pac_id):
     chunk_ids = map(lambda x: x[0], sql_result)
     return(chunk_ids)
 
-def compare_freq_pac(pac_id, congress_tokens):
+def compare_freq_pac(pac_id, congress_tokens, smooth_constants = [10,10]):
     '''
     pac_id:          The PAC identifier used to subset speech by 
                      recipients of contributions from that PAC
@@ -131,20 +131,29 @@ def compare_freq_pac(pac_id, congress_tokens):
     
     # compare global and sample frequencies
     global_counts = get_counts(congress_tokens['counts'])
-    sample_counts = get_counts(counts_pac)
+    global_sum    = global_counts.sum()
     global_freqs  = get_rel_freqs(congress_tokens['counts'])
+  
+    sample_counts = get_counts(counts_pac)
+    sample_sum    = sample_counts.sum()
     sample_freqs  = get_rel_freqs(counts_pac)
+
+    size_ratio    = float(sample_sum) / float(global_sum)
+    print global_sum, sample_sum, size_ratio
     freq_diff     = sample_freqs - global_freqs
     vocab_diffs   = zip(congress_tokens['vocab'].values(), freq_diff)
     
     result = pd.DataFrame(vocab_diffs, columns=['ngram','freq_diff'] )
-    result['global_freq'] = global_freqs
-    result['global_n']    = global_counts
-    result['sample_freq'] = sample_freqs
-    result['sample_n']    = sample_counts
-    result.sort('freq_diff')
+    result['sample_n']      = sample_counts
+    result['global_n']      = global_counts
+    result['sample_freq']   = sample_freqs
+    result['global_freq']   = global_freqs
+    result['freq_ratio']    = result.apply(lambda row: (row['sample_freq']) / (row['global_freq']), axis=1)
+    result['fratio_smooth'] = result.apply(lambda row: ((1.*row['sample_n'] + smooth_constants[0]) / \
+                                                        (1.*row['global_n'] + smooth_constants[1]))/ \
+                                                          size_ratio, axis=1)
 
-    print result.sort('freq_diff')
+    print result.sort('fratio_smooth')
     
     return(result)
 
