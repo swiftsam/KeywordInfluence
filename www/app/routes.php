@@ -24,9 +24,8 @@ Route::get('pac', function()
 
 Route::get('pac/{id}', function($id)
 {
-	//$pac = Pac::
-	//return View::make('pac')->with()
-    return 'PAC '.$id;
+	$pac = Pac::find($id);
+	return View::make('pac')->with('pac', $pac);
 });
 
 Route::get('foundation', function()
