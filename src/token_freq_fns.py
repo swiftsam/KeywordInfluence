@@ -21,15 +21,16 @@ parlimentary_stop_words = ["mr","madam","speaker","president","chairman","chair"
 def token_count_congress(congress,            \
                          limit       = 'ALL', \
                          ngram_range = (2,2), \
-                         min_df      = 10,     \
+                         min_df      = 100,   \
                          store_out   = False, \
                          use_stored  = True,
                          stop_words  = parlimentary_stop_words):
 
-    pickle_file_name  = '../data/token_count_congress_' + \
-                        str(congress) + '_' +\
-                        "_".join([str(ngram_range[0]),\
+    pickle_file_name  = '../data/token_count_congress_' +   \
+                        str(congress) + '_' +               \
+                        '_'.join([str(ngram_range[0]),      \
                                     str(ngram_range[1])]) + \
+                        '_min' + str(min_df) +              \
                         '.p'
 
     if isfile(pickle_file_name) and use_stored:
@@ -61,9 +62,16 @@ def token_count_congress(congress,            \
         if store_out:
             pickle.dump( results, open( pickle_file_name, "wb" ) )
 
-
-
     return results
+
+# Get list of PACs by cycle
+def get_pac_ids(cycle):
+    conn = psql.connect("dbname='keyword-influence'")
+    if cycle:
+        pacs = pd.read_sql_query("SELECT cmte_id FROM pac WHERE cycle = '"+cycle+"'", conn)
+    else:
+        pacs = pd.read_sql_query("SELECT cmte_id FROM pac", conn)
+    return pacs.cmte_id.tolist()
 
 # Get the vocabulary and token count for words spoken by recipients of a pac 
 def token_count_pac(pac_id,           \
@@ -139,7 +147,7 @@ def compare_freq_pac(pac_id, congress_tokens, smooth_constants = [10,10]):
     sample_freqs  = get_rel_freqs(counts_pac)
 
     size_ratio    = float(sample_sum) / float(global_sum)
-    print global_sum, sample_sum, size_ratio
+    #print global_sum, sample_sum, size_ratio
     freq_diff     = sample_freqs - global_freqs
     vocab_diffs   = zip(congress_tokens['vocab'].values(), freq_diff)
     
@@ -149,11 +157,11 @@ def compare_freq_pac(pac_id, congress_tokens, smooth_constants = [10,10]):
     result['sample_freq']   = sample_freqs
     result['global_freq']   = global_freqs
     result['freq_ratio']    = result.apply(lambda row: (row['sample_freq']) / (row['global_freq']), axis=1)
-    result['fratio_smooth'] = result.apply(lambda row: ((1.*row['sample_n'] + smooth_constants[0]) / \
-                                                        (1.*row['global_n'] + smooth_constants[1]))/ \
-                                                          size_ratio, axis=1)
+    #result['fratio_smooth'] = result.apply(lambda row: ((1.*row['sample_n'] + smooth_constants[0]) / \
+    #                                                    (1.*row['global_n'] + smooth_constants[1]))/ \
+    #                                                      size_ratio, axis=1)
 
-    print result.sort('fratio_smooth')
+    #print result.sort('fratio_smooth')
     
     return(result)
 
