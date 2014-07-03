@@ -105,4 +105,4 @@ CREATE TABLE industry(
 	industry TEXT,
 	sector TEXT,
 	sector_long TEXT);
-\COPY industry FROM 'data/CRP_Categories.txt';
+\COPY industry FROM 'data/crp_categories.tsv';
