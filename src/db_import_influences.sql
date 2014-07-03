@@ -96,3 +96,13 @@ CREATE TABLE pac(
 	foreign_own INTEGER,
 	active INTEGER);
 \COPY pac FROM 'data/pac.csv' WITH CSV DELIMITER AS ',';
+
+DROP TABLE IF EXISTS industry;
+CREATE TABLE industry(
+	catcode TEXT,
+	catname TEXT,
+	catorder TEXT,
+	industry TEXT,
+	sector TEXT,
+	sector_long TEXT);
+\COPY industry FROM 'data/CRP_Categories.txt';
