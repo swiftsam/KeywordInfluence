@@ -13,12 +13,12 @@
 
 Route::get('/', function()
 {
-	return 'Main Page';
+	return View::make('main');
 });
 
 Route::get('pac', function()
 {
-    $pacs = Pac::paginate(25);
+    $pacs = Pac::paginate(15);
     return View::make('pacs')->with('pacs', $pacs);
 });
 
@@ -28,7 +28,20 @@ Route::get('pac/{id}', function($id)
 	return View::make('pac')->with('pac', $pac);
 });
 
-Route::get('foundation', function()
+Route::get('industry', function()
 {
-    return View::make('foundation');
+    $industries = Industry::paginate(15);
+    return View::make('industries')->with('industries', $industries);
 });
+
+Route::get('industry/{id}', function($id)
+{
+	$industry = Industry::find($id);
+	return View::make('industry')->with('industry', $industry);
+});
+
+Route::get('about', function()
+{
+	return View::make('about');
+});
+
