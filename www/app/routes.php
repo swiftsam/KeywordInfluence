@@ -18,7 +18,7 @@ Route::get('/', function()
 
 Route::get('pac', function()
 {
-    $pacs = Pac::paginate(15);
+    $pacs = Pac::paginate(25);
     return View::make('pacs')->with('pacs', $pacs);
 });
 

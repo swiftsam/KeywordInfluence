@@ -2,6 +2,6 @@
 
 @section('content')
 
-	{{ $pac->pac_short }}
+	<h2>{{ $pac->pac_short }}</h2>
 
 @stop

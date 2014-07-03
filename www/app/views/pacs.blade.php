@@ -1,8 +1,6 @@
-
 @extends('layout')
-
 @section('content')
-<?php echo $pacs->links(); ?>
+<div class="pagination"><?php echo $pacs->links(); ?></div>
 <table>
     @foreach($pacs as $pac)
         <tr>
@@ -10,5 +8,4 @@
        	</tr>
     @endforeach
 </table>
-
 @stop
