@@ -132,6 +132,10 @@ def compare_freq_pac(pac_id, congress_tokens, smooth_constants = [10,10]):
     
     # identify the chunks by recipients of the pac
     chunk_ids     = get_chunk_ids_by_pac(pac_id)
+
+    if not len(chunk_ids):
+        return None
+
     ind_dict      = dict((k,i) for i,k in enumerate(congress_tokens['chunk_ids']))
     inter         = set( ind_dict.keys() ).intersection(chunk_ids)
     indices       = [ ind_dict[x] for x in inter ]
@@ -161,7 +165,7 @@ def compare_freq_pac(pac_id, congress_tokens, smooth_constants = [10,10]):
     #                                                    (1.*row['global_n'] + smooth_constants[1]))/ \
     #                                                      size_ratio, axis=1)
 
-    #print result.sort('fratio_smooth')
+    result = result.sort('freq_ratio', ascending=False)
     
     return(result)
 

@@ -1,7 +1,7 @@
-DROP TABLE IF EXISTS webdata_pac;
-CREATE TABLE webdata_pac (
-	pac_id TEXT,
+DROP TABLE IF EXISTS freq_diff;
+CREATE TABLE freq_diff (
+	entity_id TEXT,
 	congress INTEGER,
 	json_data TEXT);
 
-\COPY webdata_pac FROM 'data/webdata_pac.csv' WITH CSV HEADER DELIMITER AS ',';
+\COPY freq_diff FROM 'data/freq_diff.csv' WITH CSV HEADER DELIMITER AS ',';

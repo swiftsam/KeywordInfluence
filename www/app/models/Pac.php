@@ -9,6 +9,11 @@ class Pac extends Eloquent {
     {
         return $this->hasOne('Industry', 'catcode', 'prim_code');
     }
+    
+    public function freqdiff()
+    {
+        return $this->hasOne('FreqDiff','entity_id');
+    }
 
     public function contributions()
     {

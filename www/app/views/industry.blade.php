@@ -12,7 +12,7 @@
 
 	<table class="table table-hover table-condensed">
 	<tr><th>PAC name</th><th>Campaign Cycle</th></tr>
-    @foreach($industry->unique_pacs as $pac)
+    @foreach($industry->pacs as $pac)
         <tr>
         	<td><a href="/pac/{{ $pac->cmte_id}}">{{ $pac->pac_short }}</a></td>
         	<td>{{$pac->cycle}}</td>
