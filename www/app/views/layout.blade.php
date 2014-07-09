@@ -6,6 +6,7 @@
     <!-- Bootstrap -->
     <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href='http://fonts.googleapis.com/css?family=Ubuntu+Mono:700' rel='stylesheet' type='text/css'>
+    <link href='/css/nv.d3.css' rel='stylesheet' media='screen'>
     <link href="/css/koi.css" rel="stylesheet" media="screen">
 
     <script src="http://code.jquery.com/jquery.min.js"></script>
