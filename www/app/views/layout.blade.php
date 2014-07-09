@@ -7,6 +7,12 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href='http://fonts.googleapis.com/css?family=Ubuntu+Mono:700' rel='stylesheet' type='text/css'>
     <link href="/css/koi.css" rel="stylesheet" media="screen">
+
+    <script src="http://code.jquery.com/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="/js/nv.d3.min.js"></script>
+
   </head>
   <body>
     <div class="navbar navbar-fixed-top" role="navigation">
@@ -29,8 +35,6 @@
         </div>
       </div>
     </div>
-    <script src="http://code.jquery.com/jquery.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

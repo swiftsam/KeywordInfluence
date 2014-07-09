@@ -7,6 +7,6 @@ class PacContribution extends Eloquent {
 
 	public function congressperson()
     {
-        return $this->hasOne('Congressperson', 'bioguide_id', 'candidate_id');
+        return $this->hasOne('Congressperson', 'crp_id', 'candidate_id');
     }
 }
