@@ -30,20 +30,18 @@
 			<table class="table table-hover table-condensed">
 				<tr><th>Date</th><th>Amount</th><th>Congressperson</th></tr>
 		    	@foreach($pac->contributions as $contrib)
-		        <tr>
-		        	<td>{{$contrib->date}}</td>
-		        	<td>{{$contrib->amount}}</td>
-
-		        	<td><?php 
-		        		$cp = $contrib->congressperson;
-		        		if(isset($cp)){
-		        			echo("(".$cp->party."-".$cp->state.") <a href='http://www.opencongress.org/people/show/".$cp->govtrack_id."' target='_blank'>".$cp->firstname." ".$cp->lastname."</a>");
-			        	} else {
-			        		echo("<i>not elected</i>");
-			        	}
-		        		?>
-					</td>
-		       	</tr>
+		    	<?php 
+		    		$cp = $contrib->congressperson;
+		    		if(isset($cp)){ 	
+		    		?>
+			        <tr>
+			        	<td>{{$contrib->date}}</td>
+			        	<td>{{$contrib->amount}}</td>
+			        	<td><?php echo("(".$cp->party."-".$cp->state.") <a href='http://www.opencongress.org/people/show/".$cp->govtrack_id."' target='_blank'>".$cp->firstname." ".$cp->lastname."</a>"); ?>
+						</td>
+			       	</tr>
+		       	<?php 
+		       		} ?>
 		    	@endforeach
 			</table>	  	
 	  </div>
@@ -83,7 +81,7 @@ pac_data = [
 		nv.addGraph(function() {
 		  chart = nv.models.multiBarHorizontalChart()
 		      .x(function(d) { return d.ngram })
-		      .y(function(d) { return d.freq_ratio })
+		      .y(function(d) { return d.freq_diff })
 		      .margin({top: 30, right: 20, bottom: 50, left: 175})
 		      .showValues(true)
 		      .tooltips(false)
@@ -93,7 +91,7 @@ pac_data = [
 		      .showControls(false);
 
 		  chart.yAxis
-		      .tickFormat(d3.format(',.1f'));
+		      .tickFormat(d3.format(',.4f'));
 
 		  d3.select('#chart1 svg')
 		      .datum(pac_data)

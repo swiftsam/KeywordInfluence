@@ -29,3 +29,5 @@ CREATE TABLE congress(
 	senate_class TEXT,
 	birthdate TEXT);
 \COPY congress FROM 'data/legislators.csv' WITH CSV HEADER DELIMITER AS ',';
+CREATE INDEX ON congress (fec_id);
+CREATE INDEX ON congress (bioguide_id);

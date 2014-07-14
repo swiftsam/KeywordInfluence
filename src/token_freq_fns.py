@@ -68,9 +68,25 @@ def token_count_congress(congress,            \
 def get_pac_ids(cycle):
     conn = psql.connect("dbname='keyword-influence'")
     if cycle:
-        pacs = pd.read_sql_query("SELECT cmte_id FROM pac WHERE cycle = '"+cycle+"'", conn)
+        pacs = pd.read_sql_query("SELECT DISTINCT p.cmte_id \
+                                  FROM pac AS p, \
+                                       pac_contrib AS pc, \
+                                       words AS w, \
+                                       congress AS c \
+                                  WHERE p.cmte_id = pc.pac_id \
+                                    AND pc.fec_candidate_id = c.fec_id \
+                                    AND c.bioguide_id = w.bioguide_id \
+                                    AND p.cycle = '"+cycle+"';", conn)
+
     else:
-        pacs = pd.read_sql_query("SELECT cmte_id FROM pac", conn)
+        pacs = pd.read_sql_query("SELECT DISTINCT p.cmte_id \
+                                  FROM pac AS p, \
+                                       pac_contrib AS pc, \
+                                       words AS w, \
+                                       congress AS c \
+                                  WHERE p.cmte_id = pc.pac_id \
+                                    AND pc.fec_candidate_id = c.fec_id \
+                                    AND c.bioguide_id = w.bioguide_id;", conn)
     return pacs.cmte_id.tolist()
 
 # Get the vocabulary and token count for words spoken by recipients of a pac 

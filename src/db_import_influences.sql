@@ -78,6 +78,8 @@ CREATE TABLE pac_contrib (
 	fec_candidate_id TEXT);
 
 \COPY pac_contrib FROM 'data/pac_contrib.csv' WITH CSV DELIMITER AS ',';
+CREATE INDEX ON pac_contrib (pac_id);
+CREATE INDEX ON pac_contrib (fec_candidate_id);
 
 DROP TABLE IF EXISTS pac;
 CREATE TABLE pac(
@@ -96,6 +98,7 @@ CREATE TABLE pac(
 	foreign_own INTEGER,
 	active INTEGER);
 \COPY pac FROM 'data/pac.csv' WITH CSV DELIMITER AS ',';
+CREATE INDEX ON pac (cmte_id);
 
 DROP TABLE IF EXISTS industry;
 CREATE TABLE industry(

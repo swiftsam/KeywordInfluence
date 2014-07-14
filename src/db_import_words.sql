@@ -24,3 +24,4 @@ CREATE TABLE words (
 	n_sentence INTEGER);
 
 \COPY words FROM 'data/words.csv' WITH CSV HEADER DELIMITER AS ',';
+CREATE INDEX ON words (bioguide_id);
